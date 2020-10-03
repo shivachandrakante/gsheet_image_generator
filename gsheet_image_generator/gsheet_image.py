@@ -9,12 +9,10 @@ from google.auth.transport.requests import Request
 
 
 def Image_generator(client_secret_file, api_name, api_version, *scopes):
-    print(client_secret_file, api_name, api_version, scopes, sep='-')
     CLIENT_SECRET_FILE = client_secret_file
     API_SERVICE_NAME = api_name
     API_VERSION = api_version
     SCOPES = [scope for scope in scopes[0]]
-    print(SCOPES)
  
     cred = None
  
@@ -37,10 +35,10 @@ def Image_generator(client_secret_file, api_name, api_version, *scopes):
  
     try:
         service = build(API_SERVICE_NAME, API_VERSION, credentials=cred)
-        print(API_SERVICE_NAME, 'service created successfully')
+        print(API_SERVICE_NAME, 'Service created Successfully :-)')
         return service
     except Exception as e:
-        print('Unable to connect.')
+        print('Unable to connect')
         print(e)
         return None
  
