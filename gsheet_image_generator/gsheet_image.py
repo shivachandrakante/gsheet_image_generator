@@ -35,7 +35,7 @@ def Image_generator(client_secret_file, api_name, api_version, *scopes):
  
     try:
         service = build(API_SERVICE_NAME, API_VERSION, credentials=cred)
-        print(API_SERVICE_NAME, 'Service created Successfully :-)')
+        print(API_SERVICE_NAME.capitalize(), 'Service created Successfully :-)')
         return service
     except Exception as e:
         print('Unable to connect')

@@ -11,7 +11,10 @@ API_VERSION = 'v4'
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
  
-spreadsheet_id='1SrZfvr2ee54r7HR1jGtAE9zHIj_Y-UzK9ok8bdwkpqc'
+#spreadsheet_id='1SrZfvr2ee54r7HR1jGtAE9zHIj_Y-UzK9ok8bdwkpqc'
+#spreadsheet_id='1-vtkPg9efeEzIpq7Sdm2lOw0vQUc4KANEX7we4q8iVk'
+print("Enter Spread Sheet Id:- ")
+spreadsheet_id=str(input())
 service = Image_generator(CLIENT_SECRET_FILE, API_SERVICE_NAME, API_VERSION, SCOPES)
 gs = service.spreadsheets()
 rows = gs.values().get(spreadsheetId=spreadsheet_id,range='Sheet1').execute()
@@ -43,29 +46,37 @@ def get_column(axis,df_cols):
          text="""Choose """+axis+""" from the list""",
          justify = tk.LEFT,
          padx = 20).pack()
-    for val, column in enumerate(df_cols):
+    for column in df_cols:
         tk.Radiobutton(root, 
-                      text=column,
+                      text=column[0].capitalize(),
                       indicatoron = 0,
                       width = 20,
                       padx = 20, 
                       variable=v, 
                       command=root.destroy,
-                      value=val).pack(anchor=tk.W)
+                      value=column[1]).pack(anchor=tk.W)
     root.mainloop()
     return v.get()
 
-x_axis_column_index=get_column('X',df_cols)
-x_axis=df_cols[x_axis_column_index][0]
-df_cols.pop(x_axis_column_index)
-y_axis_column_index=get_column('Y',df_cols)
-y_axis=df_cols[y_axis_column_index][0]
 
-plt.plot(df[x_axis],df[y_axis],'g')
-maxi=max(df.average_sales)
-plt.yticks(np.linspace(0, maxi, 10).astype('int'))
-plt.xticks(np.arange(min(df.year),max(df.year+1),1).astype('int'))
-plt.savefig("year_vs_sales_graph")
-plt.show()
+
+def plot_graph():
+    x_axis_column_index=get_column('X',df_cols) #Selecting X-axis
+    x_axis=df_cols[x_axis_column_index][0]
+    df_cols.pop(x_axis_column_index)
+    y_axis_column_index=get_column('Y',df_cols) #Selecting Y-axis
+    y_axis=df_cols[y_axis_column_index][0]
+
+
+    df[x_axis]=df[x_axis].astype('int')   #Converting the X-axis to Int
+    df[y_axis]=df[y_axis].astype('int')   #Converting the Y-axis to Int
+    plt.plot(df[x_axis],df[y_axis],'g')   #Plotting the Graph
+    plt.yticks(np.linspace(0, max(df[y_axis])+1 , 10).astype('int'))          #Yticks for better vizulization
+    plt.xticks(np.arange(min(df[x_axis]),max(df[x_axis]+1),1).astype('int'))  #Xticks for better vizulization
+    plt.savefig(x_axis.capitalize()+"_vs_"+y_axis.captalize()+"_Graph")       #Saving the Graph as Image
+    plt.show()
+
+plot_graph()
+print("Thanks For using this Library")
 
 
