@@ -11,8 +11,6 @@ API_VERSION = 'v4'
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
  
-#spreadsheet_id='1SrZfvr2ee54r7HR1jGtAE9zHIj_Y-UzK9ok8bdwkpqc'
-#spreadsheet_id='1-vtkPg9efeEzIpq7Sdm2lOw0vQUc4KANEX7we4q8iVk'
 print("Enter Spread Sheet Id:- ")
 spreadsheet_id=str(input())
 service = Image_generator(CLIENT_SECRET_FILE, API_SERVICE_NAME, API_VERSION, SCOPES)
@@ -73,7 +71,7 @@ def plot_graph():
     plt.plot(df[x_axis],df[y_axis],'g')   #Plotting the Graph
     plt.yticks(np.linspace(0, max(df[y_axis])+1 , 10).astype('int'))          #Yticks for better vizulization
     plt.xticks(np.arange(min(df[x_axis]),max(df[x_axis]+1),1).astype('int'))  #Xticks for better vizulization
-    plt.savefig(x_axis.capitalize()+"_vs_"+y_axis.captalize()+"_Graph")       #Saving the Graph as Image
+    plt.savefig(x_axis.capitalize()+"_vs_"+y_axis.capitalize()+"_Graph")       #Saving the Graph as Image
     plt.show()
 
 plot_graph()
