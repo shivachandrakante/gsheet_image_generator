@@ -11,17 +11,17 @@ pip install gsheet_image_generator
 ## How to use it?
 Open the Terminal and Enter Google Sheet ID As Shown in the Below Image.
 
-![alt text](https://drive.google.com/file/d/17GtykI5ROfTjLQqfd7UxJpYJK09oHIbn/view?usp=sharing?raw=true)
+![1st](https://user-images.githubusercontent.com/35963631/95240319-da0e8c80-0829-11eb-9acd-896cde03dd47.png)
 
 You can take below picture as reference to find the Sheet ID of a Google sheet.
 <br></br>
 The Sheet Id is Highlighted in Yellow Color.
 
-![alt text](https://drive.google.com/file/d/1-Yk_UmN16IrYZ8GhS0Glqd-YpTmqWsiB/view?usp=sharing?raw=true)
+![2nd](https://user-images.githubusercontent.com/35963631/95240395-f8748800-0829-11eb-8ed8-0da45cd62708.png)
 
 After Entering the Sheet Id you will be able to see the below message if the permission to access the sheet has granted. Else you will see the Exception where your application failed.
 
-![alt text](https://drive.google.com/file/d/153UG_qOmaJMi7blypS7dwzZalecFAK39/view?usp=sharing?raw=true)
+![3rd](https://user-images.githubusercontent.com/35963631/95240457-104c0c00-082a-11eb-98a3-8aed817766fe.png)
 
 
 ## License
