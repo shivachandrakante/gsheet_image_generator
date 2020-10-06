@@ -1,0 +1,41 @@
+from setuptools import setup, find_packages
+
+with open("README.md","r") as fh:
+  long_description=fh.read() 
+
+setup(
+    name='gsheet_image_generator',
+    version='1.0.0',
+    author='shivachandra',
+    author_email='k.s9908725092@gmail.com',
+    url='https://github.com/shivachandrakante/gsheet_image_generator',
+    description='An awesome package which helps us in creating a graph from Google Sheets and stores them as image',
+    long_description=long_description,
+    long_description_content="text/markdown",
+    keywords='spreadhseets google api v4 wrapper csv pandas image_generator',
+    packages=find_packages(),
+    scripts=['bin/script1','bin/script2'],
+    license='LICENSE.txt',
+    platforms='any',
+    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*',
+    include_package_data=True,
+    install_requires=
+      [
+        "google-auth-oauthlib==0.4.1",
+        "google-auth-httplib2==0.0.4",
+        "gsheets >= 0.5.1",
+        "numpy",
+        "pandas",
+        "matplotlib",
+        'google-api-python-client<1.8; python_version < "3"',
+        'google-api-python-client; python_version >= "3"',
+        'oauth2client>=1.5.0',
+      ],
+    entry_points=
+      {
+          "console_scripts": 
+          [
+            "gsheet_image_generator=gsheet_image_generator.__main__::main",
+          ]
+      }
+)
