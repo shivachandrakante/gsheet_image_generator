@@ -27,6 +27,7 @@ setup(
         "numpy",
         "pandas",
         "matplotlib",
+        "seaborn",
         'google-api-python-client<1.8; python_version < "3"',
         'google-api-python-client; python_version >= "3"',
         'oauth2client>=1.5.0',
