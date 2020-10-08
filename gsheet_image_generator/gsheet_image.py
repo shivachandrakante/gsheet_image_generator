@@ -8,7 +8,7 @@ from google.auth.transport.requests import Request
 
 
 
-def Image_generator(client_secret_file, api_name, api_version, *scopes):
+def Create_service(client_secret_file, api_name, api_version, *scopes):
     CLIENT_SECRET_FILE = client_secret_file
     API_SERVICE_NAME = api_name
     API_VERSION = api_version
