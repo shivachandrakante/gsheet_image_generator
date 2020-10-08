@@ -7,9 +7,8 @@ from .gsheet_image import Create_service
 
 
 class Image_generator(object):
-    def __init__(self):
-        print("Enter the Client Secret File")
-        self.CLIENT_SECRET_FILE = str(input())
+    def __init__(self,path):
+        self.CLIENT_SECRET_FILE = path
         self.API_SERVICE_NAME = 'drive'
         self.API_VERSION = 'v3'
         self.SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -35,114 +34,109 @@ class Image_generator(object):
         self.google_sheet = self.service.spreadsheets()
         self.rows = self.google_sheet.values().get(spreadsheetId=self.spreadsheet_id,range='Sheet1').execute()
         self.data = self.rows.get('values')
-        self.df = pd.DataFrame(self.data)
-        self.cols=self.df.iloc[0]
-        self.df=self.df.iloc[1:]
-        self.df.columns=self.cols
+        self.sheet = pd.DataFrame(self.data)
+        self.cols=self.sheet.iloc[0]
+        self.sheet=self.sheet.iloc[1:]
+        self.sheet.columns=self.cols
 
     def get_column(self,axis):
-        print(self.df.columns)
+        print(self.sheet.columns)
         print("Enter the number to select the column for "+ axis +' axis')
         return str(input())
 
+    def convert_dtype(self,column,type_conversion):
+        self.sheet[column]=self.sheet[column]=self.sheet[column].astype(type_conversion)
+
     def convert_timestamp_to_datetime(self):
-        print(self.df.columns)
+        print(self.sheet.columns)
         print("Select & Enter column to convert it in to Date time")
         column=str(input())
-        self.df[column]=self.df[column].astype('int')
-        self.df[column]=self.df[column].apply(lambda x:pd.Timestamp(x,unit='s').date())
-        self.df[column]=pd.to_datetime(self.df[column])
+        self.sheet[column]=self.sheet[column].astype('int')
+        self.sheet[column]=self.sheet[column].apply(lambda x:pd.Timestamp(x,unit='s').date())
+        self.sheet[column]=pd.to_datetime(self.sheet[column])
     
     def generate_year(self):
         print("Enter the column name from which you want to extract year")
+        print(self.sheet.columns)
         self.column_name=str(input())
-        self.df['year']=self.df[self.column_name].dt.year
+        self.sheet['year']=self.sheet[self.column_name].dt.year
     def generate_month(self):
         print("Enter the column name from which you want to extract year")
+        print(self.sheet.columns)
         self.column_name=str(input())
-        self.df['month']=self.df[self.column_name].dt.month
+        self.sheet['month']=self.sheet[self.column_name].dt.month
 
     def generate_day(self):
         print("Enter the column name from which you want to extract year")
+        print(self.sheet.columns)
         self.column_name=str(input())
-        self.df['day']=self.df[self.column_name].dt.day
+        self.sheet['day']=self.sheet[self.column_name].dt.day
 
-    def group_by_year(self):
-        self.df=self.df.groupby(by=['year']).sum()
-        self.df.reset_index(inplace=True)
+    def groupby_year(self):
+        self.sheet=self.sheet.groupby(by=['year']).sum()
+        self.sheet.reset_index(inplace=True)
 
-    def group_by_month(self):
-        self.df=self.df.groupby(by=['month']).sum()
-        self.df.reset_index(inplace=True)
+    def groupby_month(self):
+        self.sheet=self.sheet.groupby(by=['month']).sum()
+        self.sheet.reset_index(inplace=True)
 
-    def group_by_day(self):
-        self.df=self.df.groupby(by=['day']).sum()
-        self.df.reset_index(inplace=True)
+    def groupby_day(self):
+        self.sheet=self.sheet.groupby(by=['day']).sum()
+        self.sheet.reset_index(inplace=True)
 
     def plot_line_graph(self):
-        self.df_cols=self.df.columns
+        self.sheet_cols=self.sheet.columns
         self.x_axis=self.get_column('X') #Selecting X-axis
         self.y_axis=self.get_column('Y') #Selecting Y-axis
 
 
-        self.df[self.x_axis]=self.df[self.x_axis].astype('int')   #Converting the X-axis to Int
-        self.df[self.y_axis]=self.df[self.y_axis].astype('int')   #Converting the Y-axis to Int
-        plt.plot(self.df[self.x_axis],self.df[self.y_axis],'g')   #Plotting the Graph
-        plt.yticks(np.linspace(0, max(self.df[self.y_axis])+1 , 10).astype('int'))          #Yticks for better vizulization
-        plt.xticks(np.arange(min(self.df[self.x_axis]),max(self.df[self.x_axis]+1),1).astype('int'))  #Xticks for better vizulization
-        plt.savefig(self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Line_Graph")       #Saving the Graph as Image
+        self.sheet[self.x_axis]=self.sheet[self.x_axis].astype('int')   #Converting the X-axis to Int
+        self.sheet[self.y_axis]=self.sheet[self.y_axis].astype('int')   #Converting the Y-axis to Int
+        plt.plot(self.sheet[self.x_axis],self.sheet[self.y_axis],'g')   #Plotting the Graph
+        plt.yticks(np.linspace(0, max(self.sheet[self.y_axis])+1 , 10).astype('int'))          #Yticks for better vizulization
+        plt.xticks(np.arange(min(self.sheet[self.x_axis]),max(self.sheet[self.x_axis]+1),1).astype('int'))  #Xticks for better vizulization
+        print("Enter the Director Path where you want to store Yor Image")
+        self.path_to_store=str(input())
+        plt.savefig(self.path_to_store+'/'+self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Line_Graph")       #Saving the Graph as Image
         plt.show()
 
     def plot_bar_graph(self):
-        self.df_cols=self.df.columns
+        self.sheet_cols=self.sheet.columns
         self.x_axis=self.get_column('X') #Selecting X-axis
         self.y_axis=self.get_column('Y') #Selecting Y-axis
 
-        sns.barplot(self.df[self.x_axis],self.df[self.y_axis])   #Plotting the Graph 
-        plt.savefig(self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Bar_Graph")       #Saving the Graph as Image
+        sns.barplot(self.sheet[self.x_axis],self.sheet[self.y_axis])   #Plotting the Graph 
+        print("Enter the Director Path where you want to store Yor Image")
+        self.path_to_store=str(input())
+        plt.savefig(self.path_to_store+'/'+self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Bar_Graph")       #Saving the Graph as Image
         plt.show()
 
     def box_plot(self):
-        self.df_cols=self.df.columns
+        self.sheet_cols=self.sheet.columns
         self.x_axis=self.get_column('X') #Selecting X-axis
         self.y_axis=self.get_column('Y') #Selecting Y-axis
 
-        self.df[self.x_axis]=self.df[self.x_axis].astype('int')   #Converting the X-axis to Int
-        self.df[self.y_axis]=self.df[self.y_axis].astype('int')   #Converting the Y-axis to Int
+        self.sheet[self.x_axis]=self.sheet[self.x_axis].astype('int')   #Converting the X-axis to Int
+        self.sheet[self.y_axis]=self.sheet[self.y_axis].astype('int')   #Converting the Y-axis to Int
 
-        sns.boxplot(x=self.df[self.x_axis],y=self.df[self.y_axis])   #Plotting the Graph 
-        plt.savefig(self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Box_plot")       #Saving the Graph as Image
+        sns.boxplot(x=self.sheet[self.x_axis],y=self.sheet[self.y_axis])   #Plotting the Graph 
+        print("Enter the Director Path where you want to store Yor Image")
+        self.path_to_store=str(input())
+        plt.savefig(self.path_to_store+'/'+self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Box_plot")       #Saving the Graph as Image
         plt.show()
 
     def scatter_plot(self):
-        self.df_cols=self.df.columns
+        self.sheet_cols=self.sheet.columns
         self.x_axis=self.get_column('X') #Selecting X-axis
         self.y_axis=self.get_column('Y') #Selecting Y-axis
 
 
-        self.df[self.x_axis]=self.df[self.x_axis].astype('int')   #Converting the X-axis to Int
-        self.df[self.y_axis]=self.df[self.y_axis].astype('int')   #Converting the Y-axis to Int
-        plt.scatter(self.df[self.x_axis],self.df[self.y_axis],'*g')   #Plotting the Graph
-        plt.yticks(np.linspace(0, max(self.df[self.y_axis])+1 , 10).astype('int'))          #Yticks for better vizulization
-        plt.xticks(np.arange(min(self.df[self.x_axis]),max(self.df[self.x_axis]+1),1).astype('int'))  #Xticks for better vizulization
-        plt.savefig(self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Scatter_plot")       #Saving the Graph as Image
+        self.sheet[self.x_axis]=self.sheet[self.x_axis].astype('int')   #Converting the X-axis to Int
+        self.sheet[self.y_axis]=self.sheet[self.y_axis].astype('int')   #Converting the Y-axis to Int
+        plt.scatter(self.sheet[self.x_axis],self.sheet[self.y_axis],'g')   #Plotting the Graph
+        plt.yticks(np.linspace(0, max(self.sheet[self.y_axis])+1 , 10).astype('int'))          #Yticks for better vizulization
+        plt.xticks(np.arange(min(self.sheet[self.x_axis]),max(self.sheet[self.x_axis]+1),1).astype('int'))  #Xticks for better vizulization
+        print("Enter the Director Path where you want to store Yor Image")
+        self.path_to_store=str(input())
+        plt.savefig(self.path_to_store+'/'+self.x_axis.capitalize()+"_vs_"+self.y_axis.capitalize()+"_Scatter_plot")       #Saving the Graph as Image
         plt.show()
-
-
-    def plot_graph(self):
-        print(" 1 -> For Line    Graph")
-        print(" 2 -> For Bar     Graph")
-        print(" 3 -> For Box     Plot ")
-        print(" 4 -> For Scatter Plot ")
-        num=int(input())
-        if(num==1): 
-            self.plot_line_graph()
-        elif num==2:
-            self.plot_bar_graph()
-        elif num==3:
-            self.box_plot()
-        elif num==4:
-            self.scatter_plot()
-        else :
-            print("The Number you Entered is wrong. Please Enter Correct Number and Try again.")
-
