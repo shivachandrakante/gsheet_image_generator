@@ -4,8 +4,9 @@
 *__An awesome package which helps us in creating a graph from Google Sheets and stores them as an image.
 The Graph is plotted by selecting two columns from the sheet i.e. for x-axis and y-axis.__*
 
+--------
 ## Installation
-``` bash
+```bash
 pip install gsheet_image_generator
 ``` 
 
@@ -18,31 +19,113 @@ Go to the **Credentials** for your project and create **New credentials** > **OA
 On your first usage of ``gsheet_image_generator`` with this file (holding the client secrets), your web browser will be opened, asking you to log in with your Google account to authorize this client read access to all its Google Drive files and Google
 Sheets.
 
+--------
 ## How to use it?
 
 ### Step 1 
 Open the Terminal and Run the below code to run the API.
+Pass the Path of the ``client_secrets.json`` while calling the ``Image_generator`` Class.
 
-``` python
-gsheet_image_generator
+```python
+>>> from gsheet_image_generator.gsheet_image_generator import Image_generator
+>>> Ig=Image_generator(Path)
 ```
-### Step 2
-After Running the above snippet you will asked to enter Google Sheet ID As Shown in the Below Image.
 
-![1st](https://user-images.githubusercontent.com/35963631/95240319-da0e8c80-0829-11eb-9acd-896cde03dd47.png)
+<br>After Running the above snippet you will see weather your request has granted or not if granted then it you will be asked to select the Spread Sheet from your `Google Drive`.</br>
+<br> Select the respective number then the sheet will be Imported to your local computer.</br>
 
-You can take below picture as reference to find the Sheet ID of a Google sheet.
-<br></br>
-The Sheet Id is Highlighted in Yellow Color.
+You can Inspect the Spread Sheet by running the below command after creating an Object for  `Image_generator()` class. 
 
-![2nd](https://user-images.githubusercontent.com/35963631/95240395-f8748800-0829-11eb-8ed8-0da45cd62708.png)
+```python 
+>>> Ig.sheet.head()
+```
 
-### Step 3
-After Entering the Sheet Id you will be able to see the below message if the permission to access the sheet has granted. Else you will see the Exception where your application failed.
+> If you want to convert a Timestamp column to DateTime then use the below function so that we can convert a timestamp dtype column to datetime dtype column.
 
-![3rd](https://user-images.githubusercontent.com/35963631/95240457-104c0c00-082a-11eb-98a3-8aed817766fe.png)
+```python
+>>> Ig.convert_timestamp_to_datetime()
+```
+The above function will ask you you select a column from the Dataframe.
 
+> If you want to generate year column from datetime column in your Data frame the use the below function.
 
+```python
+>>>  Ig.generate_year()
+```
+
+> If you want to generate month column from datetime column in your Data frame the use the below function.
+
+```python
+>>>  Ig.generate_month()
+```
+
+> If you want to generate day column from datetime column in your Data frame the use the below function.
+
+```python
+>>>  Ig.generate_day()
+```
+
+> If you want to group by year then use the below function.
+
+```python
+>>>  Ig.groupby_year()
+```
+
+> If you want to group by month then use the below function.
+
+```python
+>>>  Ig.groupby_month()
+```
+
+> If you want to group by day then use the below function.
+
+```python
+>>>  Ig.groupby_day()
+```
+## Generating Graphs as Images
+--------
+> If you want to plot a Line Graph and save it as an Image then Run the below commnad
+
+```python
+>>> Ig.plot_line_graph()
+```
+By Running the above command you will be asked to select two columns i.e. One For the X-axis and the other one for Y-axis And it will ask you to enter the Path where you want to store the Image on your local computer.
+
+--------
+
+> If you want to plot a Bar Graph and save it as an Image then Run the below commnad
+
+```python
+>>> Ig.plot_bar_graph()
+```
+By Running the above command you will be asked to select two columns i.e. One For the X-axis and the other one for Y-axis And it will ask you to enter the Path where you want to store the Image on your local computer.
+
+--------
+
+> If you want to plot a Box Plot and save it as an Image then Run the below commnad
+
+```python
+>>> Ig.box_plot()
+```
+By Running the above command you will be asked to select two columns i.e. One For the X-axis and the other one for Y-axis And it will ask you to enter the Path where you want to store the Image on your local computer.
+
+--------
+> If you want to plot a Scatter Plot and save it as an Image then Run the below commnad
+
+```python
+>>> Ig.scatter_plot()
+```
+By Running the above command you will be asked to select two columns i.e. One For the X-axis and the other one for Y-axis And it will ask you to enter the Path where you want to store the Image on your local computer.
+
+## See also
+--------
+- [gsheets.py](https://pypi.org/project/gsheets/) - self-contained script to dump all worksheets of a Google
+  Spreadsheet to CSV or convert any sub sheet to a pandas DataFrame (Python 2
+  prototype for this library)
+- [gspread](https://pypi.org/project/gspread/) - Google Spreadsheets Python API (more mature and featureful
+  Python wrapper, currently using the XML-based `legacy v3 API`)
+
+--------
 ## License
 
 > This Package is licensed under the MIT license. See License for details.
