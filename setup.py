@@ -1,7 +1,7 @@
+import io
 from setuptools import setup, find_packages
 
-with open("README.md","r") as fh:
-  long_description=fh.read() 
+
 
 setup(
     name='gsheet_image_generator',
@@ -10,11 +10,11 @@ setup(
     author_email='k.s9908725092@gmail.com',
     url='https://github.com/shivachandrakante/gsheet_image_generator',
     description='An awesome package which helps us in creating a graph from Google Sheets and stores them as image',
-    long_description=long_description,
-    long_description_content="text/markdown",
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     keywords='spreadhseets google api v4 wrapper csv pandas image_generator',
     packages=find_packages(),
-    license='LICENSE.txt',
+    license='LICENSE',
     platforms='any',
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*',
     include_package_data=True,
