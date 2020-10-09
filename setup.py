@@ -14,7 +14,6 @@ setup(
     long_description_content="text/markdown",
     keywords='spreadhseets google api v4 wrapper csv pandas image_generator',
     packages=find_packages(),
-    scripts=['bin/script1','bin/script2'],
     license='LICENSE.txt',
     platforms='any',
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*',
