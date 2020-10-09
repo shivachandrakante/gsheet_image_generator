@@ -32,11 +32,4 @@ setup(
         'google-api-python-client; python_version >= "3"',
         'oauth2client>=1.5.0',
       ],
-    entry_points=
-      {
-          "console_scripts": 
-          [
-            "gsheet_image_generator=gsheet_image_generator.__main__::main",
-          ]
-      }
 )
