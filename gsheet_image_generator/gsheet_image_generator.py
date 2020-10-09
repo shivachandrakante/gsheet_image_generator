@@ -72,16 +72,8 @@ class Image_generator(object):
         self.column_name=str(input())
         self.sheet['day']=self.sheet[self.column_name].dt.day
 
-    def groupby_year(self):
-        self.sheet=self.sheet.groupby(by=['year']).sum()
-        self.sheet.reset_index(inplace=True)
-
-    def groupby_month(self):
-        self.sheet=self.sheet.groupby(by=['month']).sum()
-        self.sheet.reset_index(inplace=True)
-
-    def groupby_day(self):
-        self.sheet=self.sheet.groupby(by=['day']).sum()
+    def groupby_column(self,column):
+        self.sheet=self.sheet.groupby(by=[column]).sum()
         self.sheet.reset_index(inplace=True)
 
     def plot_line_graph(self):

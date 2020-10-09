@@ -31,7 +31,7 @@ Pass the Path of the ``client_secrets.json`` while calling the ``Image_generator
 >>> Ig=Image_generator(Path)
 ```
 
-<br>After Running the above snippet you will see weather your request has granted or not if granted then it you will be asked to select the Spread Sheet from your `Google Drive`.</br>
+<br>After Running the above snippet you will see weather your request has granted or not, if granted then you will be asked to select the Spread Sheet from your `Google Drive`.</br>
 <br> Select the respective number then the sheet will be Imported to your local computer.</br>
 
 You can Inspect the Spread Sheet by running the below command after creating an Object for  `Image_generator()` class. 
@@ -39,7 +39,16 @@ You can Inspect the Spread Sheet by running the below command after creating an 
 ```python 
 >>> Ig.sheet.head()
 ```
+---------
 
+> If you want to convert a Data type of a column then use the below function.
+
+```python
+>>> Ig.convert_dtype(column, type_conversion)
+```
+The above function will take two arguments 1st is the column you want to convert and 2nd is Type to which you want to convert like('int', 'float' ,etc...)
+
+---------
 > If you want to convert a Timestamp column to DateTime then use the below function so that we can convert a timestamp dtype column to datetime dtype column.
 
 ```python
@@ -47,41 +56,32 @@ You can Inspect the Spread Sheet by running the below command after creating an 
 ```
 The above function will ask you you select a column from the Dataframe.
 
-> If you want to generate year column from datetime column in your Data frame the use the below function.
+---------
+> If you want to generate year column from datetime column in your Data frame then use the below function.
 
 ```python
 >>>  Ig.generate_year()
 ```
-
-> If you want to generate month column from datetime column in your Data frame the use the below function.
+---------
+> If you want to generate month column from datetime column in your Data frame then use the below function.
 
 ```python
 >>>  Ig.generate_month()
 ```
-
-> If you want to generate day column from datetime column in your Data frame the use the below function.
+---------
+> If you want to generate day column from datetime column in your Data frame then use the below function.
 
 ```python
 >>>  Ig.generate_day()
 ```
-
-> If you want to group by year then use the below function.
-
-```python
->>>  Ig.groupby_year()
-```
-
-> If you want to group by month then use the below function.
+---------
+> If you want to group by entire Data frame on a particular column or liat of coluumns then use the below function.
 
 ```python
->>>  Ig.groupby_month()
+>>>  Ig.groupby_column(column)
 ```
+The above function will take one argument i.e either a single column or a more than one column passed as a list.
 
-> If you want to group by day then use the below function.
-
-```python
->>>  Ig.groupby_day()
-```
 ## Generating Graphs as Images
 --------
 > If you want to plot a Line Graph and save it as an Image then Run the below commnad
